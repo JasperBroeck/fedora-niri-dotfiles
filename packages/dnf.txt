@@ -5,5 +5,5 @@ niri
 picard
 snapd
 steam
-@vitrualization
+@virtualization
 waybar
