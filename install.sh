@@ -13,8 +13,10 @@ fi
 if [ "$1" = "-l" ]; then
     LAPTOP_MODE="yes"
 fi
-
+echo "=================================="
 echo "=== Starting Fedora Niri Setup ==="
+echo "=================================="
+echo ""
 
 # Ask for password ONCE and keep the sudo session alive
 sudo -v
@@ -25,11 +27,17 @@ while true; do
 done 2>/dev/null &
 
 # Update system
+echo "======================="
 echo "=== Updating System ==="
+echo "======================="
+echo ""
 sudo dnf upgrade -y
 
 # Installing Packages
+echo "==========================="
 echo "=== Installing Packages ==="
+echo "==========================="
+echo ""
 
 ## Installing Packages using DNF
 while read -r pkg; do
@@ -54,3 +62,14 @@ while read -r line; do
     [[ "$line" =~ ^# ]] && continue
     sudo snap install $line
 done < packages/snap.txt
+
+# Laptop Mode
+if [ "$LAPTOP_MODE" = "yes" ]; then
+    echo "============================"
+    echo "=== Enabling Laptop Mode ==="
+    echo "============================"
+    echo ""
+    sudo dnf install -y tuned
+    sudo systemctl enable --now tuned
+    sudo tuned-adm profile powersave
+fi
