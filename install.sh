@@ -49,8 +49,8 @@ while read -r pkg; do
 done < packages/flatpak.txt
 
 ## Installing Packages using Snap
-while read -r pkg; do
-    [ -z "$pkg" ] && continue
-    [[ "$pkg" =~ ^# ]] && continue
-    sudo snap install "$pkg"
+while read -r line; do
+    [ -z "$line" ] && continue
+    [[ "$line" =~ ^# ]] && continue
+    sudo snap install $line
 done < packages/snap.txt
