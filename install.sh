@@ -50,5 +50,5 @@ done < packages/flatpak.txt
 while read -r pkg; do
     [ -z "$pkg" ] && continue
     [[ "$pkg" =~ ^# ]] && continue
-    flatpak install flathub "$pkg" --noninteractive
+    sudo snap install "$pkg"
 done < packages/snap.txt
