@@ -1,1 +1,5 @@
-
+org.localsend.localsend_app
+org.freecad.FreeCAD
+com.orcaslicer.OrcaSlicer
+com.github.Bleuzen.FFaudioConverter
+com.stremio.Stremio
