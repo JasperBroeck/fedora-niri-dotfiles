@@ -29,6 +29,8 @@ echo "=== Updating System ==="
 sudo dnf upgrade -y
 
 # Installing Packages
+echo "=== Installing Packages ==="
+
 ## Installing Packages using DNF
 while read -r pkg; do
     [ -z "$pkg" ] && continue
