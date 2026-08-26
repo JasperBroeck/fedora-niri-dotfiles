@@ -1,1 +1,6 @@
+btop
+fastfetch
+picard
+snapd
+steam
 @vitrualization
