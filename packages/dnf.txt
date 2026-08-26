@@ -1,6 +1,9 @@
 btop
 fastfetch
+fuzzel
+niri
 picard
 snapd
 steam
 @vitrualization
+waybar
