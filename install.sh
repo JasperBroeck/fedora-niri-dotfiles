@@ -46,8 +46,9 @@ while read -r pkg; do
     sudo dnf install -y "$pkg"
 done < packages/dnf.txt
 
-sudo ln -s /var/lib/snapd/snap /snap
 sudo systemctl enable --now snapd.socket
+sudo ln -s /var/lib/snapd/snap /snap
+sudo systemctl restart snapd.socket
 
 ## Installing Packages using Flatpak
 while read -r pkg; do
@@ -57,11 +58,8 @@ while read -r pkg; do
 done < packages/flatpak.txt
 
 ## Installing Packages using Snap
-while read -r line; do
-    [ -z "$line" ] && continue
-    [[ "$line" =~ ^# ]] && continue
-    sudo snap install $line
-done < packages/snap.txt
+sudo snap install spotify
+sudo snap install obsidian --classic
 
 # Laptop Mode
 if [ "$LAPTOP_MODE" = "yes" ]; then
