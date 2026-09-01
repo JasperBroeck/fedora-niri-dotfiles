@@ -2,7 +2,10 @@
 
 # -h help flag and -l laptop flag
 if [ "$1" = "-h" ]; then
-    echo "Welcome to the this installer script to install Fedora with Niri WM and custom configs!"
+    echo "===================================="
+    echo "=== WELCOME - USAGE GUIDE _ HELP ==="
+    echo "===================================="
+    echo ""
     echo "Usage: run ./install.sh"
     echo "Flags:"
     echo "  -l: laptop mode (installs battery management software for a better laptop experience)"
@@ -14,9 +17,12 @@ if [ "$1" = "-l" ]; then
     LAPTOP_MODE="yes"
 fi
 echo "=================================="
-echo "=== Starting Fedora Niri Setup ==="
+echo "=== Starting Fedora Setup ==="
 echo "=================================="
 echo ""
+echo "Your machine may automatically restart at the end, press CTRL+C if you would like to stop this now"
+sleep 10
+clear
 
 # Ask for password ONCE and keep the sudo session alive
 sudo -v
@@ -25,6 +31,14 @@ while true; do
     sleep 60
     kill -0 "$$" || exit
 done 2>/dev/null &
+
+# Random tweaks
+echo "======================="
+echo "=== Applying tweaks ==="
+echo "======================="
+echo ""
+echo -e "max_parallel_downloads=10\nfastestmirror=true" | sudo tee -a /etc/dnf/dnf.conf
+sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 # Update system
 echo "======================="
@@ -67,7 +81,16 @@ if [ "$LAPTOP_MODE" = "yes" ]; then
     echo "=== Enabling Laptop Mode ==="
     echo "============================"
     echo ""
-    sudo dnf install -y tuned
-    sudo systemctl enable --now tuned
-    sudo tuned-adm profile powersave
+    sudo dnf remove tuned tuned-ppd
+    sudo dnf install --allowerasing tlp tlp-pd
+    sudo systemctl enable --now tlp.service
+    sudo systemctl enable --now tlp-pd.service
 fi
+
+# Random tweaks
+echo "========================="
+echo "=== Firmware Upgrades ==="
+echo "========================="
+echo ""
+sudo fwupdmgr refresh
+sudo fwupdmgr update -y
