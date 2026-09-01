@@ -1,9 +1,7 @@
 btop
 fastfetch
-fuzzel
-niri
 picard
+powertop
 snapd
 steam
 @virtualization
-waybar
